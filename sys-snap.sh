@@ -1,13 +1,14 @@
 s is a very simple system monitoring script.
 #v.0.1 Originally by RS-MikeK
-#v.0.2 Adapted by RS-Nate 06/18/03
-#v.0.3 Modified by NateC @ HG 08/28/07
-#      Updates suggested by Pat P @ HG 06/13/08
-#v.0.4 Updates by Mary M @ AR 08/26/08, 09/07/08
-#v.0.5 Updates by Mary M @ AR 09/18/08
+#v.0.2 Adapted by RS-Nate 06/18/2003
+#v.0.3 Modified by NateC @ HG 08/28/2007
+#      Updates suggested by Pat P @ HG 06/13/2008
+#v.0.4 Updates by Mary M @ AR 08/26/2008, 09/07/2008
+#v.0.5 Updates by Mary M @ AR 09/18/2008
 #      Merged in Robin Holec's 24 hour log retention 
 #      Set up variable control over frequently commented or uncommented lines
 #      started version numbers
+#v.0.6 Updates by Charles B @ 10/14/2012
 #
 #####
 #ToDo
@@ -109,7 +110,7 @@ for ((;;)) ; do
         echo "$date $hour $min --> load: $load" >> $LOG
         cat /proc/meminfo >> $LOG
         vmstat 1 10 >> $LOG
-        ps auwwxf >> $LOF
+        ps auwwxf >> $LOG
         netstat -anp >> $LOG
 
         # optional logging
