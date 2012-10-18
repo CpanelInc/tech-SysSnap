@@ -1,29 +1,27 @@
-s is a very simple system monitoring script.
-#v.0.1 Originally by RS-MikeK
-#v.0.2 Adapted by RS-Nate 06/18/2003
-#v.0.3 Modified by NateC @ HG 08/28/2007
-#      Updates suggested by Pat P @ HG 06/13/2008
-#v.0.4 Updates by Mary M @ AR 08/26/2008, 09/07/2008
-#v.0.5 Updates by Mary M @ AR 09/18/2008
-#      Merged in Robin Holec's 24 hour log retention 
-#      Set up variable control over frequently commented or uncommented lines
-#      started version numbers
-#v.0.6 Updates by Charles B @ 10/14/2012
+#!/bin/bash
+########################################################################
+# SysSnap is a very simple system monitoring script.
+########################################################################
+#    Copyright (C) 2012
 #
-#####
-#ToDo
+#    This program is free software; you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation; either version 2 of the License, or
+#    (at your option) any later version.
 #
-# * replace netstat with a single tcpdump
-#   and then a series of greps through it for sumaries
-# * set options through command line options
-
-#######
-#GPL v2
-#######
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License along
+#    with this program; if not, write to the Free Software Foundation, Inc.,
+#    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+########################################################################
 
 ##############
 # Set Options
-#-------------
+##############
 
 # Set the time between snapshots for formating see: man sleep
 SLEEP_TIME="1m"
@@ -45,16 +43,18 @@ MAX_DATA=""
 ################################################################################
 #  If you don't know what your doing, don't change anything below this line
 ################################################################################
+
 #######################
 # Variable Conventions
 # --------------------
 # Variables that do not change in the main loop are in all caps.
 # Variables that do get updated in the main loop are in all lowercase.
 # Use underscores not dashes
+#######################
 
 ##########
 # Set Up
-# ------
+##########
 
 # Get the date, hour, and min for various tasks
 date=`date +%Y%m%d`
@@ -86,8 +86,9 @@ if [ -d ${ROOT_DIR}system-snapshot ]; then
 fi
 
 ################
-# The Main Loop
-# -------------
+# Main()
+################
+
 for ((;;)) ; do
         # update time
         date=`date`
