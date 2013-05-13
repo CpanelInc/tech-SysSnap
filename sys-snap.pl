@@ -21,9 +21,9 @@
 
 ###########################
 # Author: Paul Trost      #
-# Company: cPanel     #
-# Version: 0.1        #
-# 2013-05-13          #
+# Company: cPanel         #
+# Version: 0.1            #
+# 2013-05-13              #
 ###########################
 
 use warnings;
@@ -44,12 +44,13 @@ my $root_dir = '/root';
 # Sometimes you won't have mysql and/or you won't have the root password to put in a .my.cnf file
 # if that's the case, set this to 0
 my $mysql = 1;
+
 # If the server has lighttpd or some other webserver, set this to 0
+# cPanel is autodetected later, so this setting is not used if running cPanel.
 my $apache = 1;
-# If the server has cpanel set this to 1
-my $cpanel = 1;
+
 # If you want extended data, set this to 1
-my $max_data = 1;
+my $max_data = 0;
 
 ################################################################################
 #  If you don't know what your doing, don't change anything below this line
@@ -113,7 +114,7 @@ while (1) {
     # optional logging
     print $LOG qx(mysqladmin proc), "\n" if $mysql;
 
-    if ($cpanel) {
+    if ( -f '/usr/local/cpanel/cpanel' ) {
         print $LOG qx(lynx --dump localhost/whm-server-status), "\n";
     }
     elsif ($apache) {
