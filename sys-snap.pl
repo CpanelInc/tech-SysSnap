@@ -1,37 +1,37 @@
 #!/usr/bin/perl
-########################################################################
-# SysSnap is a very simple system monitoring script.
-########################################################################
-#    Copyright (C) 2012
-#
-#    This program is free software; you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation; either version 2 of the License, or
-#    (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-#
-#    You should have received a copy of the GNU General Public License along
-#    with this program; if not, write to the Free Software Foundation, Inc.,
-#    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-########################################################################
+##############################################################################
+# SysSnap is a very simple system monitoring script.                         #
+##############################################################################
+#    Copyright (C) 2012                                                      #
+#                                                                            #
+#    This program is free software; you can redistribute it and/or modify    #
+#    it under the terms of the GNU General Public License as published by    #
+#    the Free Software Foundation; either version 2 of the License, or       #
+#    (at your option) any later version.                                     #
+#                                                                            #
+#    This program is distributed in the hope that it will be useful,         #
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of          #
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           #
+#    GNU General Public License for more details.                            #
+#                                                                            #
+#    You should have received a copy of the GNU General Public License along #
+#    with this program; if not, write to the Free Software Foundation, Inc., #
+#    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.             #
+##############################################################################
 
-###########################
-# Author: Paul Trost      #
-# Company: cPanel         #
-# Version: 0.1            #
-# 2013-05-13              #
-###########################
+######################
+# Author: Paul Trost #
+# Company: cPanel    #
+# Version: 0.2       #
+# 2013-05-13         #
+######################
 
 use warnings;
 use strict;
 use File::Path qw(remove_tree);
 
 ##############
-# Set Options
+# Set Option #s
 ##############
 
 # Set the time between snapshots for formating see: man sleep
@@ -52,12 +52,12 @@ my $apache = 1;
 # If you want extended data, set this to 1
 my $max_data = 0;
 
-################################################################################
-#  If you don't know what your doing, don't change anything below this line
-################################################################################
+############################################################################
+# If you don't know what your doing, don't change anything below this line #
+############################################################################
 
 ##########
-# Set Up
+# Set Up #
 ##########
 
 # Get the date, hour, and min for various tasks
@@ -66,13 +66,11 @@ chomp( my $hour = `date +%H` );
 chomp( my $min  = `date +%M` );
 
 if ( !-d $root_dir ) {
-    print "$root_dir is not a directory\n";
-    die;
+    die "$root_dir is not a directory\n";
 }
 
 if ( !-w $root_dir ) {
-   print "$root_dir is not writable\n"; 
-   die;
+   die "$root_dir is not writable\n"; 
 }
 
 if ( -d "$root_dir/system-snapshot" ) {
@@ -80,12 +78,14 @@ if ( -d "$root_dir/system-snapshot" ) {
     remove_tree( "$root_dir/system-snapshot" );
 }
 
-mkdir "$root_dir/system-snapshot" if !-d "$root_dir/system-snapshot";
+if ( !-d "$root_dir/system-snapshot" ) {
+    mkdir "$root_dir/system-snapshot";
+}
 
 
-################
-# Main()
-################
+##########
+# Main() #
+##########
 
 while (1) {
 
