@@ -61,9 +61,12 @@ my $max_data = 0;
 ##########
 
 # Get the date, hour, and min for various tasks
-chomp( my $date = `date +%Y%m%d` );
-chomp( my $hour = `date +%H` );
-chomp( my $min  = `date +%M` );
+my($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
+$year += 1900;  # Format year correctly
+$mon++;         # Format month correctly
+$mon = "0$mon" if $mon < 10;
+$mday = "0$mday" if $mday < 10;
+my $date = $year . $mon . $mday;
 
 if ( !-d $root_dir ) {
     die "$root_dir is not a directory\n";
@@ -89,10 +92,12 @@ if ( !-d "$root_dir/system-snapshot" ) {
 
 while (1) {
 
-    # update time
-    chomp( my $date = `date +%Y%m%d` );
-    chomp( my $hour = `date +%H` );
-    chomp( my $min  = `date +%M` );
+    ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
+    $year += 1900;  # Format year correctly
+    $mon++;         # Format month correctly
+    $mon  = "0$mon"  if $mon < 10;
+    $mday = "0$mday" if $mday < 10;
+    $date = $year . $mon . $mday;
 
     # go to the next log file
     mkdir "$root_dir/system-snapshot/$hour";
