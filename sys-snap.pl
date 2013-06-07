@@ -22,7 +22,7 @@
 ######################
 # Author: Paul Trost #
 # Company: cPanel    #
-# Version: 0.2       #
+# Version: 0.2.1     #
 # 2013-05-13         #
 ######################
 
@@ -132,8 +132,8 @@ while (1) {
     close $LOG;
 
     # rotate the "current" pointer
-    system 'rm', '-rf', "$root_dir/system-snapshot/current";
-    system 'ln', '-s', "${current_interval}.log", "$root_dir/system-snapshot/current";
+    remove_tree( "$root_dir/system-snapshot/current" );
+    symlink "${current_interval}.log", "$root_dir/system-snapshot/current";
 
     sleep($sleep_time);
 
