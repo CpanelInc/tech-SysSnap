@@ -21,18 +21,17 @@
 
 ######################
 # Author: Paul Trost #
-# Company: cPanel    #
-# Version: 0.2.1     #
-# 2013-05-13         #
+# Version: 0.3       #
+# 2013-06-14         #
 ######################
 
 use warnings;
 use strict;
 use File::Path qw(remove_tree);
 
-##############
-# Set Option #s
-##############
+###############
+# Set Options #
+###############
 
 # Set the time between snapshots for formating see: man sleep
 my $sleep_time = 300;
@@ -62,10 +61,10 @@ my $max_data = 0;
 
 # Get the date, hour, and min for various tasks
 my($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
-$year += 1900;  # Format year correctly
-$mon++;         # Format month correctly
-$mon = "0$mon" if $mon < 10;
-$mday = "0$mday" if $mday < 10;
+$year += 1900;    # Format year correctly
+$mon++;           # Format month correctly
+$mon  = 0 . $mon  if $mon < 10;
+$mday = 0 . $mday if $mday < 10;
 my $date = $year . $mon . $mday;
 
 if ( !-d $root_dir ) {
@@ -95,8 +94,8 @@ while (1) {
     ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
     $year += 1900;  # Format year correctly
     $mon++;         # Format month correctly
-    $mon  = "0$mon"  if $mon < 10;
-    $mday = "0$mday" if $mday < 10;
+    $mon  = 0 . $mon  if $mon < 10;
+    $mday = 0 . $mday if $mday < 10;
     $date = $year . $mon . $mday;
 
     # go to the next log file
@@ -104,21 +103,33 @@ while (1) {
     my $current_interval = "$hour/$min";
 
     my $logfile = "$root_dir/system-snapshot/$current_interval.log";
-    open( my $LOG, '>', $logfile ) or die "Could not open log file $logfile, $!\n";
+    open( my $LOG, '>', $logfile )
+        or die "Could not open log file $logfile, $!\n";
 
-    # ### start actually logging ### #
-    
-    # basic stuff
-    my $load = qx(cat /proc/loadavg); # least cpu
+    # start actually logging #
+    my $load = qx(cat /proc/loadavg);
+    print $LOG "Load Average:\n\n";
     print $LOG "$date $hour $min --> load: $load\n";
+
+    print $LOG "Memory Usage:\n\n";
     print $LOG qx(cat /proc/meminfo), "\n";
+
+    print $LOG "Virtual Memory Stats:\n\n";
     print $LOG qx(vmstat 1 10), "\n";
+
+    print $LOG "Process List:\n\n";
     print $LOG qx(ps auwwxf), "\n";
+
+    print $LOG "Network Connections:\n\n";
     print $LOG qx(netstat -anp), "\n";
 
     # optional logging
-    print $LOG qx(mysqladmin proc), "\n" if $mysql;
+    if ($mysql) {
+        print $LOG "MYSQL Processes:\n\n";
+        print $LOG qx(mysqladmin proc), "\n";
+    }
 
+    print $LOG "Apache Processes\n\n";
     if ( -f '/usr/local/cpanel/cpanel' ) {
         print $LOG qx(lynx --dump localhost/whm-server-status), "\n";
     }
@@ -127,10 +138,12 @@ while (1) {
     }
 
     if ($max_data) {
+        print $LOG "Process List for user Nobody:\n\n";
         my @process_list = qx(ps aux | grep [n]obody | awk '{print \$2}');
         foreach my $process (@process_list) {
             print $LOG qx(ls -al /proc/$process | grep cwd | grep home);
         }
+        print $LOG "List of Open Files:\n\n";
         print $LOG qx(lsof), "\n";
     }
 
