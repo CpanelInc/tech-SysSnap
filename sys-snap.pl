@@ -21,7 +21,7 @@
 
 ######################
 # Author: Paul Trost #
-# Version: 0.3       #
+# Version: 0.3.1     #
 # 2013-06-14         #
 ######################
 
@@ -60,7 +60,7 @@ my $max_data = 0;
 ##########
 
 # Get the date, hour, and min for various tasks
-my($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
+my ( $sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst ) = localtime(time);
 $year += 1900;    # Format year correctly
 $mon++;           # Format month correctly
 $mon  = 0 . $mon  if $mon < 10;
@@ -70,8 +70,7 @@ my $date = $year . $mon . $mday;
 if ( !-d $root_dir ) {
     die "$root_dir is not a directory\n";
 }
-
-if ( !-w $root_dir ) {
+elsif ( !-w $root_dir ) {
    die "$root_dir is not writable\n"; 
 }
 
@@ -91,9 +90,9 @@ if ( !-d "$root_dir/system-snapshot" ) {
 
 while (1) {
 
-    ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
-    $year += 1900;  # Format year correctly
-    $mon++;         # Format month correctly
+    ( $sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst ) = localtime(time);
+    $year += 1900;    # Format year correctly
+    $mon++;           # Format month correctly
     $mon  = 0 . $mon  if $mon < 10;
     $mday = 0 . $mday if $mday < 10;
     $date = $year . $mon . $mday;
