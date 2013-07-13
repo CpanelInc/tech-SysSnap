@@ -21,13 +21,13 @@
 
 ######################
 # Author: Paul Trost #
-# Version: 0.3.1     #
-# 2013-06-14         #
+# Version: 0.3.2     #
+# 2013-07-13         #
 ######################
 
 use warnings;
 use strict;
-use File::Path qw(remove_tree);
+use File::Path qw(rmtree);
 
 ###############
 # Set Options #
@@ -76,7 +76,7 @@ elsif ( !-w $root_dir ) {
 
 if ( -d "$root_dir/system-snapshot" ) {
     system 'tar', 'czf', "${root_dir}/system-snapshot.${date}.${hour}${min}.tar.gz", "${root_dir}/system-snapshot";
-    remove_tree( "$root_dir/system-snapshot" );
+    rmtree( "$root_dir/system-snapshot" );
 }
 
 if ( !-d "$root_dir/system-snapshot" ) {
@@ -149,7 +149,7 @@ while (1) {
     close $LOG;
 
     # rotate the "current" pointer
-    remove_tree( "$root_dir/system-snapshot/current" );
+    rmtree( "$root_dir/system-snapshot/current" );
     symlink "${current_interval}.log", "$root_dir/system-snapshot/current";
 
     sleep($sleep_time);
