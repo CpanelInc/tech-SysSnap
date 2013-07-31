@@ -21,8 +21,8 @@
 
 ######################
 # Author: Paul Trost #
-# Version: 0.3.1     #
-# 2013-06-14         #
+# Version: 0.3.2     #
+# 2013-07-31
 ######################
 
 use warnings;
@@ -33,11 +33,10 @@ use File::Path qw(remove_tree);
 # Set Options #
 ###############
 
-# Set the time between snapshots for formating see: man sleep
+# Set the time between snapshots in seconds
 my $sleep_time = 300;
 
 # The base directory under which to build the directory where snapshots are stored.
-# You *MUST* put a slash at the end.
 my $root_dir = '/root';
 
 # Sometimes you won't have mysql and/or you won't have the root password to put in a .my.cnf file
@@ -67,6 +66,7 @@ $mon  = 0 . $mon  if $mon < 10;
 $mday = 0 . $mday if $mday < 10;
 my $date = $year . $mon . $mday;
 
+# Ensure target directory exists and is writable
 if ( !-d $root_dir ) {
     die "$root_dir is not a directory\n";
 }
@@ -90,6 +90,7 @@ if ( !-d "$root_dir/system-snapshot" ) {
 
 while (1) {
 
+    # Ensure we have a current date/time
     ( $sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst ) = localtime(time);
     $year += 1900;    # Format year correctly
     $mon++;           # Format month correctly
