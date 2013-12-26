@@ -76,13 +76,13 @@ if [ ! -w ${ROOT_DIR} ] ; then
         exit 1
 fi
 
-# make sure we can create the logs where we want them
-[ ! -d ${ROOT_DIR}system-snapshot ] && mkdir ${ROOT_DIR}system-snapshot
-
-#save and data from previous runs
+# if a system-snapshot directory exists, save the data and empty it.
+# if it does't, create it.  
 if [ -d ${ROOT_DIR}system-snapshot ]; then
         tar -czf ${ROOT_DIR}system-snapshot.${date}.${hour}${min}.tar.gz ${ROOT_DIR}system-snapshot
         rm -fr ${ROOT_DIR}system-snapshot/*
+else
+	mkdir ${ROOT_DIR}system-snapshot
 fi
 
 ################
