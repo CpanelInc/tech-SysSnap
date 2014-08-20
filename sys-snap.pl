@@ -108,8 +108,8 @@ while (1) {
 
     # start actually logging #
     my $load = qx(cat /proc/loadavg);
-    print $LOG "Load Average:\n\n";
-    print $LOG "$date $hour $min --> load: $load\n";
+    #print $LOG "Load Average:\n\n";  # without this line, you can get historical loads with head -n1 *
+    print $LOG "$date $hour $min Load Average: $load\n";
 
     print $LOG "Memory Usage:\n\n";
     print $LOG qx(cat /proc/meminfo), "\n";
