@@ -21,8 +21,8 @@
 
 ######################
 # Author: Paul Trost #
-# Version: 0.3.2     #
-# 2013-07-31
+# Version: 0.3.3     #
+# 2013-07-31         #
 ######################
 
 use warnings;
@@ -129,7 +129,7 @@ while (1) {
         print $LOG qx(mysqladmin proc), "\n";
     }
 
-    print $LOG "Apache Processes\n\n";
+    print $LOG "Apache Processes:\n\n";
     if ( -f '/usr/local/cpanel/cpanel' ) {
         print $LOG qx(lynx --dump localhost/whm-server-status), "\n";
     }
