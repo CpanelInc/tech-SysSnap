@@ -60,7 +60,7 @@ my $max_data = 0;
 
 # Get the date, hour, and min for various tasks
 my ( $sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst ) = localtime(time);
-$year += 2000;    # Format year correctly
+$year += 1900;    # Format year correctly
 $mon++;           # Format month correctly
 $mon  = 0 . $mon  if $mon < 10;
 $mday = 0 . $mday if $mday < 10;
