@@ -34,7 +34,7 @@ use File::Path qw(remove_tree);
 ###############
 
 # Set the time between snapshots in seconds
-my $sleep_time = 300;
+my $sleep_time = 60;
 
 # The base directory under which to build the directory where snapshots are stored.
 my $root_dir = '/root';
